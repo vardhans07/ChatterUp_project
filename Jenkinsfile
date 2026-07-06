@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    tools {
+        nodejs 'Node24'   // <-- use the name you set in Global Tool Configuration
+    }
+
     stages {
         stage('Checkout') {
             steps {
@@ -10,32 +14,32 @@ pipeline {
 
         stage('Check Node') {
             steps {
-                bat '"D:\\C\\Program Files\\nodejs\\node.exe" -v'
-                bat '"D:\\C\\Program Files\\nodejs\\npm.cmd" -v'
+                bat 'node -v'
+                bat 'npm -v'
             }
         }
 
         stage('Install Dependencies') {
             steps {
-                bat '"D:\\C\\Program Files\\nodejs\\npm.cmd" install'
+                bat 'npm install'
             }
         }
 
         stage('Build') {
             steps {
-                bat '"D:\\C\\Program Files\\nodejs\\npm.cmd" run build'
+                bat 'npm run build'
             }
         }
 
         stage('Test') {
             steps {
-                bat '"D:\\C\\Program Files\\nodejs\\npm.cmd" test'
+                bat 'npm test'
             }
         }
 
         stage('Deploy') {
             steps {
-                bat '"D:\\C\\Program Files\\nodejs\\node.exe" index.js'
+                bat 'node index.js'
             }
         }
     }
